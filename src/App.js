@@ -1,23 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import TodoMain from './TodoComponent/TodoMain';
+import { useState } from 'react';
+import { Box, Button } from '@mui/material'; 
+import {UseUserContext} from './Context/Context'
+import { useEffect } from 'react';
+
 
 function App() {
+  const [components, setComponents] = useState([]);
+  const {updateButton, setUpdateButton} = UseUserContext();
+
+  function addComponent() { 
+    setComponents([...components, {title: "", id: components.length}]) 
+  } 
+
+  useEffect(() => {
+      console.log(updateButton, 'updateButton')
+  },[updateButton])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        {updateButton}
+        <Button variant="contained" onClick={addComponent}>Add </Button>
+        <Box className="multiple-component">
+        {components.map((item, i) =><div key={i} className='new-form'> <TodoMain /></div> )}
+        <div className='last-form'><TodoMain /></div>
+      
+        </Box>
+        <Button onClick={() => setUpdateButton(components)} className='next-button' variant="contained">NEXT</Button>
     </div>
   );
 }
