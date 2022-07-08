@@ -7,27 +7,30 @@ import { useEffect } from 'react';
 
 
 function App() {
-  const [components, setComponents] = useState([]);
   const {updateButton, setUpdateButton} = UseUserContext();
+  const [components, setComponents] = useState([]);
 
   function addComponent() { 
     setComponents([...components, {title: "", id: components.length}]) 
   } 
 
-  useEffect(() => {
-      console.log(updateButton, 'updateButton')
-  },[updateButton])
+    const handleNext = (item) =>{
+      setUpdateButton(item)
+    }
+
+useEffect(() => {
+console.log(updateButton, 'updateButton')
+},[updateButton])
 
   return (
     <div className="App">
-        {updateButton}
         <Button variant="contained" onClick={addComponent}>Add </Button>
         <Box className="multiple-component">
         {components.map((item, i) =><div key={i} className='new-form'> <TodoMain /></div> )}
         <div className='last-form'><TodoMain /></div>
       
         </Box>
-        <Button onClick={() => setUpdateButton(components)} className='next-button' variant="contained">NEXT</Button>
+        <Button onClick={() => handleNext(components)} className='next-button' variant="contained">NEXT</Button>
     </div>
   );
 }
